@@ -1,5 +1,6 @@
 package org.sfaci.bombermanx.screens;
 
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import org.sfaci.bombermanx.Bombermanx;
 import org.sfaci.bombermanx.util.Constants;
 
@@ -17,14 +18,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 /**
  * Pantalla de inicio
- * Se presenta el menú de juego
+ * Se presenta el menú de game
  * @author Santiago Faci
+ * @version 1.0
  *
  */
 public class MainMenuScreen implements Screen {
 	
 	final Bombermanx game;
-	Stage stage;
+	private Stage stage;
 	
 	public MainMenuScreen(Bombermanx game) {
 		this.game = game;
@@ -42,83 +44,68 @@ public class MainMenuScreen implements Screen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		// Pinta el menú
-		stage.act(dt);
+		stage.act();
 		stage.draw();
 	}
 	
 	private void loadScreen() {
-		// Grafo de escena que contendrá todo el menú
+		// Grafo de escena que contiene el menú
 		stage = new Stage();
 					
 		// Crea una tabla, donde añadiremos los elementos de menú
-		Table table = new Table();
-		table.setPosition(0, Constants.SCREEN_HEIGHT / 1.5f);
-		// La tabla ocupa toda la pantalla
-	    table.setFillParent(true);
-	    table.setHeight(Constants.SCREEN_HEIGHT);
-	    stage.addActor(table);
-		
-	    // Etiqueta de texto
-		Label label = new Label("Bienvenido a Bombermanx", game.getSkin());
-		label.setPosition(Constants.SCREEN_WIDTH / 2 - label.getWidth() / 2, label.getOriginY() - 20);
-		table.addActor(label);
-		
-		// Botón
-		TextButton buttonPlay = new TextButton("Nueva Partida", game.getSkin());
-		buttonPlay.setWidth(Constants.SCREEN_WIDTH / 3);
-		buttonPlay.setPosition(Constants.SCREEN_WIDTH / 2 - buttonPlay.getWidth() / 2, label.getOriginY() - 40);
-		buttonPlay.setHeight(20);
-		buttonPlay.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				
-				dispose();
-				game.setScreen(new GameScreen(game));
-			}
-		});
-		table.addActor(buttonPlay);
-		
-		// Botón
-		TextButton buttonConfig = new TextButton("Configurar", game.getSkin());
-		buttonConfig.setWidth(Constants.SCREEN_WIDTH / 3);
-		buttonConfig.setPosition(Constants.SCREEN_WIDTH / 2 - buttonConfig.getWidth() / 2, label.getOriginY() - 80);
-		buttonConfig.setHeight(20);
-		buttonConfig.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				
-				//dispose();
-				//game.setScreen(new ConfigurationScreen(game));
-			}
-		});
-		table.addActor(buttonConfig);
-		
-		// Botón
-		TextButton buttonQuit = new TextButton("Salir", game.getSkin());
-		buttonQuit.setWidth(Constants.SCREEN_WIDTH / 3);
-		buttonQuit.setPosition(Constants.SCREEN_WIDTH / 2 - buttonQuit.getWidth() / 2, label.getOriginY() - 120);
-		buttonQuit.setHeight(20);
-		buttonQuit.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;	
-			}
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				
-				game.dispose();
-				System.exit(0);
-			}
-		});
-		table.addActor(buttonQuit);
-		
-		Gdx.input.setInputProcessor(stage);
+		Table table = new Table(game.getSkin());
+        table.setFillParent(true);
+        table.center();
+
+        // Etiqueta de texto
+        Label label = new Label("JBOMBERMANX", game.getSkin());
+        label.setFontScale(2.5f);
+
+        // Botones de menú
+        TextButton playButton = new TextButton("NUEVA PARTIDA", game.getSkin());
+        playButton.addListener(new ClickListener() {
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                dispose();
+                game.setScreen(new GameScreen(game));
+            }
+        });
+
+        TextButton settingsButton = new TextButton("CONFIGURACIÓN", game.getSkin());
+        settingsButton.addListener(new ClickListener() {
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+            }
+        });
+
+        TextButton quitButton = new TextButton("SALIR", game.getSkin());
+        quitButton.addListener(new ClickListener() {
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                dispose();
+                System.exit(0);
+            }
+        });
+
+        Label aboutLabel = new Label("JBombermanx v0.1\n(c) Santiago Faci\nhttp://bitbucket.org/sfaci/bombermanx", game.getSkin());
+        aboutLabel.setFontScale(1f);
+
+        table.row().height(100);
+        table.add(label).center().pad(35f);
+        table.row().height(40);
+        table.add(playButton).center().width(200).pad(5f);
+        table.row().height(40);
+        table.add(settingsButton).center().width(200).pad(5f);
+        table.row().height(40);
+        table.add(quitButton).center().width(200).pad(5f);
+        table.row().height(40);
+        table.add(aboutLabel).center().pad(55f);
+
+        stage.addActor(table);
+        Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
 	public void resize(int width, int height) {
+        stage.setViewport(width, height);
 	}
 
 	@Override

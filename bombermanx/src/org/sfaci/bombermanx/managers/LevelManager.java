@@ -3,7 +3,9 @@ package org.sfaci.bombermanx.managers;
 import org.sfaci.bombermanx.characters.Brick;
 import org.sfaci.bombermanx.characters.Brick.BrickType;
 import org.sfaci.bombermanx.characters.Enemy;
+import org.sfaci.bombermanx.characters.Player;
 import org.sfaci.bombermanx.util.Constants;
+import org.sfaci.bombermanx.managers.ResourceManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -54,32 +56,39 @@ public class LevelManager {
 				}
 				
 				if (brickId.trim().equals("a")) {
-					Enemy enemy = new Enemy(x, y, "enemy_blue", Enemy.Direction.VERTICAL);
+					Enemy enemy = new Enemy(x, y, "enemy_blue", Enemy.Direction.RANDOM, spriteManager);
 					spriteManager.enemies.add(enemy);
 					x += Constants.BRICK_WIDTH;
 					continue;
 				}
 				
 				if (brickId.trim().equals("u")) {
-					Enemy enemy = new Enemy(x, y, "enemy_ugly", Enemy.Direction.VERTICAL);
+					Enemy enemy = new Enemy(x, y, "enemy_ugly", Enemy.Direction.VERTICAL, spriteManager);
 					spriteManager.enemies.add(enemy);
 					x += Constants.BRICK_WIDTH;
 					continue;
 				}
 				
 				if (brickId.trim().equals("b")) {
-					Enemy enemy = new Enemy(x, y, "enemy_barrel", Enemy.Direction.VERTICAL);
+					Enemy enemy = new Enemy(x, y, "enemy_barrel", Enemy.Direction.VERTICAL, spriteManager);
 					spriteManager.enemies.add(enemy);
 					x += Constants.BRICK_WIDTH;
 					continue;
 				}
 				
 				if (brickId.trim().equals("c")) {
-					Enemy enemy = new Enemy(x, y, "enemy_cookie", Enemy.Direction.VERTICAL);
+					Enemy enemy = new Enemy(x, y, "enemy_cookie", Enemy.Direction.VERTICAL, spriteManager);
 					spriteManager.enemies.add(enemy);
 					x += Constants.BRICK_WIDTH;
 					continue;
 				}
+
+                if (brickId.trim().equals("c")) {
+                    Enemy enemy = new Enemy(x, y, "enemy_cookie", Enemy.Direction.HORIZONTAL, spriteManager);
+                    spriteManager.enemies.add(enemy);
+                    x += Constants.BRICK_WIDTH;
+                    continue;
+                }
 				
 				brick = new Brick(getTextureBrick(brickId.trim()), x, y, getBrickType(brickId.trim()), 1, 1);
 				spriteManager.bricks.add(brick);
@@ -90,6 +99,20 @@ public class LevelManager {
 			y -= Constants.BRICK_HEIGHT;
 		}
 	}
+
+    /**
+     * Reinicia el nivel actual cuando matan al personaje
+     */
+    public void restartCurrentLevel() {
+
+        spriteManager.player.lives--;
+        spriteManager.player.speed = Constants.PLAYER_INITIAL_SPEED;
+        spriteManager.player.bombsLimit = 1;
+        spriteManager.player.bombLength = 1;
+        spriteManager.player.bombStrength = 1;
+        resetLevel();
+        loadCurrentLevel();
+    }
 	
 	/**
 	 * Pasa al siguiente nivel
@@ -109,6 +132,7 @@ public class LevelManager {
 		spriteManager.bombs.clear();
 		spriteManager.enemies.clear();
 		spriteManager.player.position = new Vector2(0, 0);
+        spriteManager.player.state = Player.State.IDLE;
 	}
 	
 	/**

@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 /**
  * Clase que gestiona los recursos del juego
  * @author Santiago Faci
- *
+ * @version 1.0
  */
 public class ResourceManager {
 
@@ -25,7 +25,7 @@ public class ResourceManager {
 	public static void loadAllResources() {
 		
 		Texture.setEnforcePotImages(false);
-		// Imágenes
+
 		ResourceManager.loadResource("door", new Texture("bricks/door.png"));
 		ResourceManager.loadResource("brick", new Texture("bricks/brick.png"));
 		ResourceManager.loadResource("broken_brick_animation", new Texture("bricks/broken_brick_animation.png"));
@@ -43,7 +43,7 @@ public class ResourceManager {
 		ResourceManager.loadResource("bomb_animation", new Texture("player/bomb_animation.png"));
 		ResourceManager.loadResource("bomb", Gdx.audio.newSound(Gdx.files.internal("sounds/bomb.wav")));
 		
-		ResourceManager.loadResource("explosion", new TextureAtlas(Gdx.files.internal("effects/explosion.atlas")));
+		ResourceManager.loadResource("explosion", new TextureAtlas(Gdx.files.internal("effects/explosion.pack")));
 		
 		ResourceManager.loadResource("bomb_length", new Texture(Gdx.files.internal("powerups/bomb_length.png")));
 		ResourceManager.loadResource("bomb", new Texture(Gdx.files.internal("powerups/bomb.png")));
@@ -86,7 +86,7 @@ public class ResourceManager {
 	 * @param name
 	 * @return
 	 */
-	public static TextureAtlas getTextureAtlas(String name) {
+	public static TextureAtlas getAtlas(String name) {
 		
 		return atlas.get(name);
 	}

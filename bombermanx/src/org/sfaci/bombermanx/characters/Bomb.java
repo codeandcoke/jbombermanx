@@ -10,6 +10,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Representa las bombas que coloca el jugador
+ * @author Santiago Faci
+ * @version 1.0
+ */
 public class Bomb extends Character {
 	
 	Animation animation;
@@ -59,8 +64,7 @@ public class Bomb extends Character {
 		ResourceManager.getSound("bomb").play();
 		
 		// Centro de la explosión
-		Explosion explosion = new Explosion(ResourceManager.getTextureAtlas("explosion"), position.x, 
-			position.y, Explosion.ExplosionType.CENTER);
+		Explosion explosion = new Explosion(position.x, position.y, Explosion.ExplosionType.CENTER);
 		explosions.add(explosion);
 		
 		float offsetX = 0;
@@ -72,34 +76,26 @@ public class Bomb extends Character {
 			offsetX += Constants.BRICK_WIDTH;
 			offsetY += Constants.BRICK_HEIGHT;
 			
-			vertical = new Explosion(ResourceManager.getTextureAtlas("explosion"), position.x, 
-					position.y + offsetY, Explosion.ExplosionType.VERTICAL);
+			vertical = new Explosion(position.x, position.y + offsetY, Explosion.ExplosionType.VERTICAL);
 			explosions.add(vertical);
-			vertical = new Explosion(ResourceManager.getTextureAtlas("explosion"), position.x, 
-					position.y - offsetY, Explosion.ExplosionType.VERTICAL);
+			vertical = new Explosion(position.x, position.y - offsetY, Explosion.ExplosionType.VERTICAL);
 			explosions.add(vertical);
-			horizontal = new Explosion(ResourceManager.getTextureAtlas("explosion"), position.x + offsetX, 
-					position.y, Explosion.ExplosionType.HORIZONTAL);
+			horizontal = new Explosion(position.x + offsetX, position.y, Explosion.ExplosionType.HORIZONTAL);
 			explosions.add(horizontal);
-			horizontal = new Explosion(ResourceManager.getTextureAtlas("explosion"), position.x - offsetX, 
-					position.y, Explosion.ExplosionType.HORIZONTAL);
+			horizontal = new Explosion(position.x - offsetX, position.y, Explosion.ExplosionType.HORIZONTAL);
 			explosions.add(horizontal);
 		}
 		
 		offsetX += Constants.BRICK_WIDTH;
 		offsetY += Constants.BRICK_HEIGHT;
 		
-		Explosion up = new Explosion(ResourceManager.getTextureAtlas("explosion"), position.x, 
-			position.y + offsetY, Explosion.ExplosionType.UP);
+		Explosion up = new Explosion(position.x, position.y + offsetY, Explosion.ExplosionType.UP);
 		explosions.add(up);
-		Explosion down = new Explosion(ResourceManager.getTextureAtlas("explosion"), position.x, 
-			position.y - offsetY, Explosion.ExplosionType.DOWN);
+		Explosion down = new Explosion(position.x, position.y - offsetY, Explosion.ExplosionType.DOWN);
 		explosions.add(down);
-		Explosion left = new Explosion(ResourceManager.getTextureAtlas("explosion"), position.x - offsetX, 
-			position.y, Explosion.ExplosionType.LEFT);
+		Explosion left = new Explosion(position.x - offsetX, position.y, Explosion.ExplosionType.LEFT);
 		explosions.add(left);
-		Explosion right = new Explosion(ResourceManager.getTextureAtlas("explosion"), position.x + offsetX, 
-			position.y, Explosion.ExplosionType.RIGHT);
+		Explosion right = new Explosion(position.x + offsetX, position.y, Explosion.ExplosionType.RIGHT);
 		explosions.add(right);
 	}
 	

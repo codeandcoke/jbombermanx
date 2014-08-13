@@ -16,8 +16,9 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Pantalla del juego, donde el usuario juega la partida
+ * Pantalla del game, donde el usuario juega la partida
  * @author Santiago Faci
+ * @version 1.0
  *
  */
 public class GameScreen implements Screen, InputProcessor {
@@ -35,7 +36,7 @@ public class GameScreen implements Screen, InputProcessor {
 			
 		ResourceManager.loadAllResources();
 		
-		spriteManager = new SpriteManager(game.spriteBatch);
+		spriteManager = new SpriteManager(game);
 		levelManager = new LevelManager(spriteManager);
 		levelManager.loadCurrentLevel();
 		
@@ -44,15 +45,13 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
 	public void render(float dt) {
 		
 		// Pinta el fondo de la pantalla de azul oscuro (RGB + alpha)
-		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+		Gdx.gl.glClearColor(0, 0, 0.2f , 1);
 		// Limpia la pantalla
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
@@ -135,14 +134,13 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
 		
-		// Pone el juego en pausa
+		// Pone el game en pausa
 		if (keycode == Keys.P)
 			paused = !paused;
 		return false;
@@ -150,37 +148,31 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

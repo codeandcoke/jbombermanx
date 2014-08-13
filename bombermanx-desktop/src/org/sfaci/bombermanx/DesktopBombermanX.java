@@ -1,7 +1,6 @@
 package org.sfaci.bombermanx;
 
-import org.sfaci.bombermanx.Bombermanx;
-import org.sfaci.bombermanx.util.Constants;
+import static org.sfaci.bombermanx.util.Constants.*;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 /**
  * Clase principal de la versión de escritorio (PC) del juego
  * @author Santiago Faci
+ * @version 1.0
  *
  */
 public class DesktopBombermanX {
@@ -17,9 +17,9 @@ public class DesktopBombermanX {
 		LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
 		configuration.title = "Bombermanx";
 
-		configuration.width = Constants.SCREEN_WIDTH;
-		configuration.height = Constants.SCREEN_HEIGHT;
-		configuration.fullscreen = true;
+		configuration.width = SCREEN_WIDTH;
+		configuration.height = SCREEN_HEIGHT;
+		configuration.fullscreen = false;
 				
 		new LwjglApplication(new Bombermanx(), configuration);
 	}

@@ -4,7 +4,6 @@ import org.sfaci.bombermanx.managers.ResourceManager;
 import org.sfaci.bombermanx.managers.SpriteManager;
 import org.sfaci.bombermanx.util.Constants;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -33,7 +32,7 @@ public class Player extends Character {
 	public int activeBombs, bombsLimit;
 	float timeBeetwenBombs;
 	public int bombLength, bombStrength;
-	public float speed = 50;
+	public float speed = Constants.PLAYER_INITIAL_SPEED;
 	public State state;
 	
 	Animation rightAnimation;

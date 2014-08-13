@@ -1,10 +1,13 @@
 package org.sfaci.bombermanx.managers;
 
+import com.badlogic.gdx.utils.Timer;
+import org.sfaci.bombermanx.Bombermanx;
 import org.sfaci.bombermanx.characters.Bomb;
 import org.sfaci.bombermanx.characters.Brick;
 import org.sfaci.bombermanx.characters.Enemy;
 import org.sfaci.bombermanx.characters.Explosion;
 import org.sfaci.bombermanx.characters.Player;
+import org.sfaci.bombermanx.screens.GameOverScreen;
 import org.sfaci.bombermanx.util.Constants;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,7 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 /**
- * Clase que gestiona los sprites del juego
+ * Clase que gestiona la lógica de la partida
  * @author Santiago Faci
  * @version 1.0
  *
@@ -24,14 +27,15 @@ public class SpriteManager {
 	public Array<Brick> bricks;
 	public Array<Bomb> bombs;
 	public Array<Enemy> enemies;
-	Vector2 oldPosition;
 	
 	SpriteBatch batch;
+    Bombermanx game;
 	LevelManager levelManager;
 	
-	public SpriteManager(SpriteBatch batch) {
+	public SpriteManager(Bombermanx game) {
 		
-		this.batch = batch;
+		batch = game.spriteBatch;
+        this.game = game;
 		
 		player = new Player(ResourceManager.getTexture("player_idle"), 0, 0, 3, this);
 		bricks = new Array<Brick>();
@@ -49,8 +53,18 @@ public class SpriteManager {
 				bomb.render(batch);
 			for (Enemy enemy : enemies)
 				enemy.render(batch);
+
+            drawHUD();
 		batch.end();
 	}
+
+    /**
+     * Pinta el HUD
+     */
+    private void drawHUD() {
+
+        game.fuente.draw(batch, player.lives + " Vidas", Constants.SCREEN_WIDTH - 40, 20);
+    }
 	
 	public void update(float dt) {
 		
@@ -71,9 +85,28 @@ public class SpriteManager {
 	private void updateEnemies(float dt) {
 		
 		for (final Enemy enemy : enemies) {	
-			
-			if (isCollidable(enemy.position, player.position))
-				player.explode();
+
+            /*
+             Es necesario comprobar que no está explotando ya por haberse chocado
+             Hay que tener en cuenta que la animación dura un rato durante el cual se
+             comprueba varias veces la colisión del enemigo con el personaje
+             */
+            if (player.state != Player.State.EXPLODE)
+                if (isCollidable(enemy.position, player.position)) {
+                    player.explode();
+                    if (player.lives > 1) {
+                        // Reinicia el nivel
+                        Timer.schedule(new Timer.Task() {
+                            public void run() {
+                                levelManager.restartCurrentLevel();
+                            }
+                        }, 3);
+                    }
+                    else {
+                        // El personaje se queda sin vida, se muestra la pantalla de GameOver
+                        game.setScreen(new GameOverScreen(game));
+                    }
+                }
 			
 			// Si un enemigo choca con un ladrillo o una bomba, cambia de dirección
 			for (Brick brick : bricks) {
@@ -122,8 +155,27 @@ public class SpriteManager {
 							brick.explode();
 			
 					// Si una explosión alcanza al jugador, éste explota
-					if (isCollidable(player.position, explosion.position)) 
-						player.explode();
+                    /*
+                     Es necesario comprobar que no está explotando ya por haberse chocado
+                     Hay que tener en cuenta que la animación dura un rato durante el cual se
+                     comprueba varias veces la colisión de la explosión con el personaje
+                     */
+                    if (player.state != Player.State.EXPLODE)
+                        if (isCollidable(player.position, explosion.position)) {
+                            player.explode();
+                            if (player.lives > 1) {
+                                // Reinicia el nivel
+                                Timer.schedule(new Timer.Task() {
+                                    public void run() {
+                                        levelManager.restartCurrentLevel();
+                                    }
+                                }, 3);
+                            }
+                            else {
+                                // El personaje se queda sin vida, se muestra la pantalla de GameOver
+                                game.setScreen(new GameOverScreen(game));
+                            }
+                        }
 				}
 			}
 		}
@@ -170,10 +222,8 @@ public class SpriteManager {
 	
 	/**
 	 * Devuelve si un punto x,y corresponde a algún elemento con el que colisionar
-	 * @param brickX La posición x del ladrillo
-	 * @param brickY La pocisión y del ladrillo
-	 * @param x La posición x del personaje
-	 * @param y La posición y del personaje
+	 * @param brickPosition La posición del ladrillo
+	 * @param position La pocisión del personaje
 	 * @return Si ladrillo y personaje colisionan
 	 */
 	private boolean isCollidable(Vector2 brickPosition, Vector2 position) {

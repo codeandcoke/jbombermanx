@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * Clase principal del proyecto principal del juego
- * 
  * @author Santiago Faci
+ * @version 1.0
  *
  */
 public class Bombermanx extends Game {
