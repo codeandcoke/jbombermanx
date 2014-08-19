@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 /**
  * Clase que representa al jugador
  * @author Santiago Faci
- * @version 1.0
+ * @version Agosto 2014
  *
  */
 public class Player extends Character {
@@ -70,7 +70,7 @@ public class Player extends Character {
 	private void createAnimations() {
 		
 		// Carga la animación de un spritesheet (todos los frames están en un mismo fichero)
-		Texture spriteSheet = ResourceManager.getTexture("player_right_animation");
+		Texture spriteSheet = ResourceManager.assets.get("player/player_right_animation.png", Texture.class);
 		TextureRegion[][] frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / FRAMES, spriteSheet.getHeight());
 		TextureRegion[] rightFrames = new TextureRegion[FRAMES];
 		for (int i = 0; i < FRAMES; i++) {
@@ -78,7 +78,7 @@ public class Player extends Character {
 		}
 		rightAnimation = new Animation(0.15f, rightFrames);
 		
-		spriteSheet = ResourceManager.getTexture("player_left_animation");
+		spriteSheet = ResourceManager.assets.get("player/player_left_animation.png", Texture.class);
 		frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / FRAMES, spriteSheet.getHeight());
 		rightFrames = new TextureRegion[FRAMES];
 		for (int i = 0; i < FRAMES; i++) {
@@ -86,7 +86,7 @@ public class Player extends Character {
 		}
 		leftAnimation = new Animation(0.15f, rightFrames);
 		
-		spriteSheet = ResourceManager.getTexture("player_up_animation");
+		spriteSheet = ResourceManager.assets.get("player/player_up_animation.png", Texture.class);
 		frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / FRAMES, spriteSheet.getHeight());
 		rightFrames = new TextureRegion[FRAMES];
 		for (int i = 0; i < FRAMES; i++) {
@@ -94,7 +94,7 @@ public class Player extends Character {
 		}
 		upAnimation = new Animation(0.15f, rightFrames);
 		
-		spriteSheet = ResourceManager.getTexture("player_down_animation");
+		spriteSheet = ResourceManager.assets.get("player/player_down_animation.png", Texture.class);
 		frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / FRAMES, spriteSheet.getHeight());
 		rightFrames = new TextureRegion[FRAMES];
 		for (int i = 0; i < FRAMES; i++) {
@@ -102,7 +102,7 @@ public class Player extends Character {
 		}
 		downAnimation = new Animation(0.15f, rightFrames);
 		
-		spriteSheet = ResourceManager.getTexture("player_explosion_animation");
+		spriteSheet = ResourceManager.assets.get("player/player_explosion_animation.png", Texture.class);
 		frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / (FRAMES * 2), spriteSheet.getHeight());
 		rightFrames = new TextureRegion[FRAMES * 2];
 		for (int i = 0; i < FRAMES * 2; i++) {
@@ -144,7 +144,7 @@ public class Player extends Character {
 				int x = Math.round(position.x / 16) * 16;
 				int y = Math.round(position.y / 16) * 16;
 				
-				final Bomb bomb = new Bomb(ResourceManager.getTexture("bomb_idle"), x, y, 
+				final Bomb bomb = new Bomb(ResourceManager.assets.get("player/bomb_idle.png", Texture.class), x, y,
 					bombLength, bombStrength, spriteManager);
 				spriteManager.bombs.add(bomb);
 				timeBeetwenBombs = 0;

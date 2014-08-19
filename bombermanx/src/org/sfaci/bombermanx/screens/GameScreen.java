@@ -18,15 +18,14 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Pantalla del game, donde el usuario juega la partida
  * @author Santiago Faci
- * @version 1.0
- *
+ * @version Agosto 2014
  */
 public class GameScreen implements Screen, InputProcessor {
 
 	final Bombermanx game;
 	
 	// Indica si el juego está en pausa
-	boolean paused = false;
+	public boolean paused = false;
 	
 	LevelManager levelManager;
 	SpriteManager spriteManager;
@@ -56,7 +55,7 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		// Actualiza la cámara
-		game.camera.update();
+		//game.camera.update();
 		
 		/* Comprueba la entrada del usuario, actualiza
 		 * la posición de los elementos del juego y
@@ -117,9 +116,9 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void resize(int width, int height) {
-		game.camera.viewportWidth = width;
+		/*game.camera.viewportWidth = width;
 		game.camera.viewportHeight = height;
-		game.camera.update();
+		game.camera.update();*/
 	}
 
 	@Override

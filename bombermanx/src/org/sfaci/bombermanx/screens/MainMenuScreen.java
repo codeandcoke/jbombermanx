@@ -20,8 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  * Pantalla de inicio
  * Se presenta el menú de game
  * @author Santiago Faci
- * @version 1.0
- *
+ * @version Agosto 2014
  */
 public class MainMenuScreen implements Screen {
 	
@@ -62,7 +61,7 @@ public class MainMenuScreen implements Screen {
         label.setFontScale(2.5f);
 
         // Botones de menú
-        TextButton playButton = new TextButton("NUEVA PARTIDA", game.getSkin());
+        TextButton playButton = new TextButton("NEW GAME", game.getSkin());
         playButton.addListener(new ClickListener() {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 dispose();
@@ -70,14 +69,15 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        TextButton settingsButton = new TextButton("CONFIGURACIÓN", game.getSkin());
+        TextButton settingsButton = new TextButton("SETTINGS", game.getSkin());
         settingsButton.addListener(new ClickListener() {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
+                dispose();
+                game.setScreen(new ConfigurationScreen(game));
             }
         });
 
-        TextButton quitButton = new TextButton("SALIR", game.getSkin());
+        TextButton quitButton = new TextButton("QUIT", game.getSkin());
         quitButton.addListener(new ClickListener() {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 dispose();

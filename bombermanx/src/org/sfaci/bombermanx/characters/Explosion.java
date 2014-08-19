@@ -7,6 +7,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import org.sfaci.bombermanx.managers.ResourceManager;
 
+/**
+ * Representa las explosiones de las bombas que coloca el jugador
+ * @author Santiago Faci
+ * @version Agosto 2014
+ */
 public class Explosion {
 
 	public enum ExplosionType {
@@ -21,7 +26,7 @@ public class Explosion {
 	
 	public Explosion(float x, float y, ExplosionType explosionType) {
 
-        TextureAtlas atlas = ResourceManager.getAtlas("explosion");
+        TextureAtlas atlas = ResourceManager.assets.get("effects/explosion.pack", TextureAtlas.class);
         String strType = null;
 
 		switch (explosionType) {

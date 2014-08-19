@@ -12,8 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
  * Pantalla de fin de partida. Se muestra cuando el usuario termina una partida
  * Se presenta un menú de game
  * @author Santiago Faci
- * @version 1.0
- *
+ * @version Agosto 2014
  */
 public class GameOverScreen implements Screen {
 	
@@ -38,9 +37,9 @@ public class GameOverScreen implements Screen {
 		
 		// Muestra un menú de inicio
 		game.spriteBatch.begin();
-		game.fuente.draw(game.spriteBatch, "Fin del juego!!!!", 100, 150);
-		game.fuente.draw(game.spriteBatch, "Si quieres jugar otra partida pulsa la tecla 'N'", 100, 110);
-		game.fuente.draw(game.spriteBatch, "Pulsa 'ESCAPE' para SALIR", 100, 90);
+		game.font.draw(game.spriteBatch, "Fin del juego!!!!", 100, 150);
+		game.font.draw(game.spriteBatch, "Si quieres jugar otra partida pulsa la tecla 'N'", 100, 110);
+		game.font.draw(game.spriteBatch, "Pulsa 'ESCAPE' para SALIR", 100, 90);
 		game.spriteBatch.end();
 		
 		/*

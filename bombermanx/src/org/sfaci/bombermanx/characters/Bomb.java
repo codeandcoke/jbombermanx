@@ -1,5 +1,6 @@
 package org.sfaci.bombermanx.characters;
 
+import com.badlogic.gdx.audio.Sound;
 import org.sfaci.bombermanx.managers.ResourceManager;
 import org.sfaci.bombermanx.managers.SpriteManager;
 import org.sfaci.bombermanx.util.Constants;
@@ -13,7 +14,7 @@ import com.badlogic.gdx.utils.Array;
 /**
  * Representa las bombas que coloca el jugador
  * @author Santiago Faci
- * @version 1.0
+ * @version Agosto 2014
  */
 public class Bomb extends Character {
 	
@@ -42,7 +43,7 @@ public class Bomb extends Character {
 		this.spriteManager = spriteManager;
 		
 		// Carga la animación de un spritesheet (todos los frames están en un mismo fichero)
-		Texture spriteSheet = ResourceManager.getTexture("bomb_animation");
+		Texture spriteSheet = ResourceManager.assets.get("player/bomb_animation.png", Texture.class);
 		TextureRegion[][] frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / FRAMES, spriteSheet.getHeight());
 		TextureRegion[] rightFrames = new TextureRegion[FRAMES];
 		for (int i = 0; i < FRAMES; i++) {
@@ -61,7 +62,8 @@ public class Bomb extends Character {
 	public void explode() {
 		
 		hasExploded = true;
-		ResourceManager.getSound("bomb").play();
+        if (spriteManager.game.configurationManager.isSoundEnabled())
+		    ResourceManager.assets.get("sounds/bomb.wav", Sound.class).play();
 		
 		// Centro de la explosión
 		Explosion explosion = new Explosion(position.x, position.y, Explosion.ExplosionType.CENTER);

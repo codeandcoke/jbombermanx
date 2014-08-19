@@ -9,8 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 /**
  * Clase que representa a cada uno de los ladrillos del juego
  * @author Santiago Faci
- * @version 1.0
- *
+ * @version Agosto 2014
  */
 public class Brick extends Character {
 
@@ -51,7 +50,7 @@ public class Brick extends Character {
 		
 		int nFrames = 6;
 		
-		Texture spriteSheet = ResourceManager.getTexture("broken_brick_animation");
+		Texture spriteSheet = ResourceManager.assets.get("bricks/broken_brick_animation.png", Texture.class);
 		TextureRegion[][] frames = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / nFrames, spriteSheet.getHeight());
 		TextureRegion[] rightFrames = new TextureRegion[nFrames];
 		for (int i = 0; i < nFrames; i++) {

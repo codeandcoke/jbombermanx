@@ -3,10 +3,12 @@ package org.sfaci.bombermanx.util;
 /**
  * Clase de constantes del proyecto
  * @author Santiago Faci
- * @version 1.0
+ * @version Agosto 2014
  */
 public class Constants {
-	
+
+    public static final String APPNAME = "jbombermanx";
+
 	public static final int SCREEN_WIDTH = 320;
 	public static final int SCREEN_HEIGHT = 240;
 	

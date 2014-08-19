@@ -1,5 +1,6 @@
 package org.sfaci.bombermanx.characters;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import org.sfaci.bombermanx.managers.ResourceManager;
 
@@ -14,7 +15,7 @@ import org.sfaci.bombermanx.util.Constants;
  * Clase que representa a los enemigos de diferentes tipos
  * que pueden aparecer
  * @author Santiago Faci
- * @version 1.0
+ * @version Agosto 2014
  */
 public class Enemy extends Character {
 
@@ -37,7 +38,7 @@ public class Enemy extends Character {
 		super(x, y);
 		
 		this.name = name;
-		animation = new Animation(0.15f, ResourceManager.getAtlas("enemies").findRegions(name));
+		animation = new Animation(0.15f, ResourceManager.assets.get("enemy/enemies.pack", TextureAtlas.class).findRegions(name));
 		
 		currentFrame = animation.getKeyFrame(0);
 		rect.width = currentFrame.getRegionWidth();
@@ -82,7 +83,7 @@ public class Enemy extends Character {
 		if (!exploding)
 			currentFrame = animation.getKeyFrame(stateTime, true);
 		else
-			currentFrame = ResourceManager.getAtlas("enemies").findRegion(name + "_dead");
+			currentFrame = ResourceManager.assets.get("enemy/enemies.pack", TextureAtlas.class).findRegion(name + "_dead");
 		
 		switch (direction) {
 		case VERTICAL:

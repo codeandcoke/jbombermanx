@@ -1,5 +1,6 @@
 package org.sfaci.bombermanx.managers;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import org.sfaci.bombermanx.Bombermanx;
 import org.sfaci.bombermanx.characters.Bomb;
@@ -18,8 +19,7 @@ import com.badlogic.gdx.utils.Array;
 /**
  * Clase que gestiona la lógica de la partida
  * @author Santiago Faci
- * @version 1.0
- *
+ * @version Agosto 2014
  */
 public class SpriteManager {
 
@@ -27,9 +27,10 @@ public class SpriteManager {
 	public Array<Brick> bricks;
 	public Array<Bomb> bombs;
 	public Array<Enemy> enemies;
+    public String hudMessage;
 	
 	SpriteBatch batch;
-    Bombermanx game;
+    public Bombermanx game;
 	LevelManager levelManager;
 	
 	public SpriteManager(Bombermanx game) {
@@ -37,15 +38,17 @@ public class SpriteManager {
 		batch = game.spriteBatch;
         this.game = game;
 		
-		player = new Player(ResourceManager.getTexture("player_idle"), 0, 0, 3, this);
+		player = new Player(ResourceManager.assets.get("player/player_idle.png", Texture.class), 0, 0, 3, this);
 		bricks = new Array<Brick>();
 		bombs = new Array<Bomb>();
 		enemies = new Array<Enemy>();
+        hudMessage = null;
 	}
 	
 	public void render() {
 		
 		batch.begin();
+        //batch.setProjectionMatrix(game.camera.combined);
 			player.render(batch);
 			for (Brick brick : bricks)
 				brick.render(batch);
@@ -63,7 +66,13 @@ public class SpriteManager {
      */
     private void drawHUD() {
 
-        game.fuente.draw(batch, player.lives + " Vidas", Constants.SCREEN_WIDTH - 40, 20);
+        if (hudMessage != null) {
+            game.font.setScale(2f);
+            game.font.draw(batch, hudMessage, 0, Constants.SCREEN_HEIGHT / 2);
+            game.font.setScale(0.5f);
+        }
+
+        game.font.draw(batch, player.lives + " Vidas", Constants.SCREEN_WIDTH - 40, 10);
     }
 	
 	public void update(float dt) {
@@ -196,19 +205,19 @@ public class SpriteManager {
 				Brick powerup = null;
 				int powerupRate = MathUtils.random(0, 200);
 				if (powerupRate < 10) {
-					powerup = new Brick(ResourceManager.getTexture("bomb_length"), brick.position.x, brick.position.y, 
+					powerup = new Brick(ResourceManager.assets.get("powerups/bomb_length.png", Texture.class), brick.position.x, brick.position.y,
 						Brick.BrickType.POWERUP_BOMB_LENGTH, 1, 1);
 				}
 				else if ((powerupRate > 10) && (powerupRate < 20)) {
-					powerup = new Brick(ResourceManager.getTexture("bomb"), brick.position.x, brick.position.y, 
+					powerup = new Brick(ResourceManager.assets.get("powerups/bomb.png", Texture.class), brick.position.x, brick.position.y,
 							Brick.BrickType.POWERUP_BOMB, 1, 1);
 				}
 				else if ((powerupRate > 20) && (powerupRate < 30)) {
-					powerup = new Brick(ResourceManager.getTexture("speed"), brick.position.x, brick.position.y,
+					powerup = new Brick(ResourceManager.assets.get("powerups/speed.png", Texture.class), brick.position.x, brick.position.y,
 							Brick.BrickType.POWERUP_SPEED, 1, 1);
 				}
 				else if ((powerupRate > 30) && (powerupRate < 40)) {
-					powerup = new Brick(ResourceManager.getTexture("life"), brick.position.x, brick.position.y,
+					powerup = new Brick(ResourceManager.assets.get("powerups/life.png", Texture.class), brick.position.x, brick.position.y,
 						Brick.BrickType.POWERUP_LIFE, 1, 1);
 				}
 				else

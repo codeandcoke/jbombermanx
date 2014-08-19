@@ -1,11 +1,12 @@
 package org.sfaci.bombermanx.managers;
 
+import com.badlogic.gdx.utils.Timer;
 import org.sfaci.bombermanx.characters.Brick;
 import org.sfaci.bombermanx.characters.Brick.BrickType;
 import org.sfaci.bombermanx.characters.Enemy;
 import org.sfaci.bombermanx.characters.Player;
+import org.sfaci.bombermanx.screens.GameScreen;
 import org.sfaci.bombermanx.util.Constants;
-import org.sfaci.bombermanx.managers.ResourceManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -15,14 +16,12 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Clase que gestiona los niveles del juego
  * @author Santiago Faci
- *
+ * @version Agosto 2014
  */
 public class LevelManager {
 
 	public int currentLevel;
 	public int powerups;
-	// Limite de powerups que aparecen en un mismo nivel
-	public int powerupsLimit;
 	SpriteManager spriteManager;
 	
 	public LevelManager(SpriteManager spriteManager) {
@@ -31,7 +30,6 @@ public class LevelManager {
 		this.spriteManager.levelManager = this;
 		
 		currentLevel = 1;
-		powerupsLimit = 5;
 		powerups = 0;
 	}
 	
@@ -118,11 +116,26 @@ public class LevelManager {
 	 * Pasa al siguiente nivel
 	 */
 	public void passLevel() {
-		
-		currentLevel++;
-		resetLevel();
+
+        setLevelClearedMessage();
+        currentLevel++;
+        resetLevel();
 		loadCurrentLevel();
 	}
+
+    /**
+     * Prepara un mensaje de "fin de nivel" para que se muestre 2 segundos
+     */
+    private void setLevelClearedMessage() {
+        ((GameScreen) spriteManager.game.getScreen()).paused = true;
+        spriteManager.hudMessage = "LEVEL " + currentLevel + " CLEARED";
+        Timer.schedule(new Timer.Task() {
+            public void run() {
+                spriteManager.hudMessage = null;
+                ((GameScreen) spriteManager.game.getScreen()).paused = false;
+            }
+        }, 2);
+    }
 	
 	/**
 	 * Resetea el nivel actual
@@ -163,11 +176,11 @@ public class LevelManager {
 		
 		switch (brickId) {
 		case "x":
-			return ResourceManager.getTexture("brick");
+			return ResourceManager.assets.get("bricks/brick.png", Texture.class);
 		case "s":
-			return ResourceManager.getTexture("stone");
+			return ResourceManager.assets.get("bricks/stone.png", Texture.class);
 		case "d":
-			return ResourceManager.getTexture("door");
+			return ResourceManager.assets.get("bricks/door.png", Texture.class);
 		default:
 			return null;
 		}
