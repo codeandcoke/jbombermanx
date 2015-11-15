@@ -9,8 +9,8 @@ public class Constants {
 
     public static final String APPNAME = "jbombermanx";
 
-	public static final int SCREEN_WIDTH = 320;
-	public static final int SCREEN_HEIGHT = 240;
+	public static final int SCREEN_WIDTH = 320;		// 320
+	public static final int SCREEN_HEIGHT = 240;	// 240
 	
 	public static final int PLAYER_WIDTH = 12;
 	public static final int PLAYER_HEIGHT = 15;

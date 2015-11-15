@@ -4,3 +4,7 @@
 # generated files
 bin/
 gen/
+out/
+
+# mac files
+.DS_Store

@@ -52,7 +52,7 @@ public class Bomb extends Character {
 		animation = new Animation(0.15f, rightFrames);
 		stateTime = 0;
 		
-		explosions = new Array<Explosion>();
+		explosions = new Array<>();
 		dead = false;
 	}
 	
